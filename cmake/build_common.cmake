@@ -13,43 +13,36 @@ endif()
 set(TAG "")
 if(DEFINED ENV{TAG})
     set(TAG "$ENV{TAG}")
-else()
-    find_package(Git)
-
-    if(Git_FOUND)
-        execute_process(
-	    COMMAND ${GIT_EXECUTABLE} 
-		rev-parse --short HEAD
-    	    OUTPUT_VARIABLE
-                TAG
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-        )
-        set(TAG "_${TAG}")
-    endif()
 endif()
 
 set(BUILD_PATH "${CMAKE_CURRENT_LIST_DIR}/../build")
 set(PACKAGE_NAME "cryptopp-${VERSION}-${ARCH}-${BUILD}${TAG}")
 set(CMAKE_INSTALL_PREFIX ${ROOT}/${PACKAGE_NAME})
-set(RELEASE_LIBS_NAME "libcryptopp")
-set(DEBUG_LIBS_NAME ${RELEASE_LIBS_NAME}d)
+
+set(GNU_RELEASE_LIBS_NAME "libcryptopp")
+set(GNU_DEBUG_LIBS_NAME ${GNU_RELEASE_LIBS_NAME}d)
+
+set(MSVS_RELEASE_LIBS_NAME "cryptlib")
+set(MSVS_DEBUG_LIBS_NAME ${MSVS_RELEASE_LIBS_NAME}d)
 
 if(WIN32)
-    execute_process(COMMAND msbuild cryptlib.vcxproj /p:Configuration=Debug
-	WORKING_DIRECTORY "${BUILD_PATH}/.."
-    )
-
-    execute_process(COMMAND msbuild cryptlib.vcxproj /p:Configuration=Release
-	WORKING_DIRECTORY "${BUILD_PATH}/.."
-    )
-
+    message(STATUS ${ARCH})
     if(NOT ${ARCH} MATCHES x86)
         set(ARCH x64)
     endif()
 
-    execute_process(COMMAND ${CMAKE_COMMAND} -E copy ${ARCH}/Output/Release/cryptlib.lib ${ROOT}/${PACKAGE_NAME}/lib/${RELEASE_LIBS_NAME}.lib
-	    COMMAND ${CMAKE_COMMAND} -E copy ${ARCH}/Output/Debug/cryptlib.lib ${ROOT}/${PACKAGE_NAME}/lib/${DEBUG_LIBS_NAME}.lib
-	    COMMAND ${CMAKE_COMMAND} -E copy ${ARCH}/Output/Debug/cryptlib.pdb ${ROOT}/${PACKAGE_NAME}/lib/${DEBUG_LIBS_NAME}.pdb
+    execute_process(COMMAND msbuild cryptlib.vcxproj /p:Configuration=Release /p:Platform=${ARCH} #msbuild cryptlib.vcxproj /p:Configuration=Debug
+	WORKING_DIRECTORY "${BUILD_PATH}/.."
+    )
+
+    execute_process(COMMAND msbuild cryptlib.vcxproj /p:Configuration=Debug /p:Platform=${ARCH} #msbuild cryptlib.vcxproj /p:Configuration=Release
+	WORKING_DIRECTORY "${BUILD_PATH}/.."
+    )
+
+
+    execute_process(COMMAND ${CMAKE_COMMAND} -E copy ${ARCH}/Output/Release/${MSVS_RELEASE_LIBS_NAME}.lib ${ROOT}/${PACKAGE_NAME}/lib/${MSVS_RELEASE_LIBS_NAME}.lib
+	    COMMAND ${CMAKE_COMMAND} -E copy ${ARCH}/Output/Debug/${MSVS_RELEASE_LIBS_NAME}.lib ${ROOT}/${PACKAGE_NAME}/lib/${MSVS_DEBUG_LIBS_NAME}.lib
+	    COMMAND ${CMAKE_COMMAND} -E copy ${ARCH}/Output/Debug/${MSVS_RELEASE_LIBS_NAME}.pdb ${ROOT}/${PACKAGE_NAME}/lib/${MSVS_DEBUG_LIBS_NAME}.pdb
 	    WORKING_DIRECTORY "${BUILD_PATH}/.."
     )
 
@@ -81,7 +74,7 @@ else()
 
     function(install isDebug)
 	if(NOT ${isDebug} MATCHES "RELEASE")
-    	    execute_process(COMMAND ${CMAKE_COMMAND} -E copy ${BUILD_PATH}/../${RELEASE_LIBS_NAME}.a ${CMAKE_INSTALL_PREFIX}/lib/${DEBUG_LIBS_NAME}.a
+    	    execute_process(COMMAND ${CMAKE_COMMAND} -E copy ${BUILD_PATH}/../${GNU_RELEASE_LIBS_NAME}.a ${CMAKE_INSTALL_PREFIX}/lib/${GNU_DEBUG_LIBS_NAME}.a
 		WORKING_DIRECTORY "${BUILD_PATH}/.."
     	    )
 	else()
@@ -109,6 +102,7 @@ endif()
 file(COPY "${CMAKE_CURRENT_LIST_DIR}/package.cmake" DESTINATION "${ROOT}/${PACKAGE_NAME}")
 
 message(STATUS "STEP PACKAGING IS STARTED")
+
 execute_process(COMMAND "${CMAKE_COMMAND}" -E tar cf "${PACKAGE_NAME}.7z" --format=7zip -- "${PACKAGE_NAME}"
     WORKING_DIRECTORY "${ROOT}"
 )
