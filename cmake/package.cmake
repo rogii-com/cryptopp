@@ -1,4 +1,4 @@
-if(TARGET Cryptopp::static_library)
+if(TARGET Cryptopp)
     return()
 endif()
 
@@ -13,31 +13,31 @@ set(
 )
 
 add_library(
-    Cryptopp::static_library
+    Cryptopp
     STATIC
     IMPORTED
 )
 
 if(MSVC)
     set_target_properties(
-        Cryptopp::static_library
+        Cryptopp
         PROPERTIES
         IMPORTED_LOCATION
-            "${CRYPTOPP_STATIC_LIBRARY_PATH}/libcryptopp.lib"
+            "${CRYPTOPP_STATIC_LIBRARY_PATH}/cryptlib.lib"
         IMPORTED_LOCATION_DEBUG
-            "${CRYPTOPP_STATIC_LIBRARY_PATH}/libcryptoppd.lib"
+            "${CRYPTOPP_STATIC_LIBRARY_PATH}/cryptlibd.lib"
         INTERFACE_INCLUDE_DIRECTORIES
             "${CRYPTOPP_INCLUDE_PATH}"
     )
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     set_target_properties(
-        Cryptopp::static_library
+        Cryptopp
         PROPERTIES
         IMPORTED_LOCATION
             "${CRYPTOPP_STATIC_LIBRARY_PATH}/libcryptopp.a"
         IMPORTED_LOCATION_DEBUG
             "${CRYPTOPP_STATIC_LIBRARY_PATH}/libcryptoppd.a"
         INTERFACE_INCLUDE_DIRECTORIES
-            "${CRYPTOPP_INCLUDE_PATH}/cryptopp"
+            "${CRYPTOPP_INCLUDE_PATH}"
     )
 endif()
