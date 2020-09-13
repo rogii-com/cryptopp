@@ -93,25 +93,32 @@ if(WIN32)
 	    "${BUILD_PATH}/.."
     )
 
-    execute_process(
-	COMMAND
-	    ${CMAKE_COMMAND} -E copy
-		${MSBUILD_ARCH}/Output/Release/cryptlib.lib
+    file(
+        COPY
+		${MSBUILD_ARCH}/Output/Release/cryptlib.lib 
+	DESTINATION
 		${ROOT}/${PACKAGE_NAME}/lib/cryptlib.lib
-	COMMAND
-	    ${CMAKE_COMMAND} -E copy
+    )
+
+    file(
+        COPY
 		${MSBUILD_ARCH}/Output/Debug/cryptlib.lib
+	DESTINATION
 		${ROOT}/${PACKAGE_NAME}/lib/cryptlibd.lib
-	COMMAND
-	    ${CMAKE_COMMAND} -E copy
+    )
+
+    file(
+        COPY
 		${MSBUILD_ARCH}/Output/Debug/cryptlib.pdb
+	DESTINATION
 		${ROOT}/${PACKAGE_NAME}/lib/cryptlib.pdb
-	COMMAND
-	    ${CMAKE_COMMAND} -E copy
+    )
+
+    file(
+        COPY
 		${MSBUILD_ARCH}/Output/Debug/cryptlib.pdb
+	DESTINATION
 		${ROOT}/${PACKAGE_NAME}/lib/cryptlibd.pdb
-	WORKING_DIRECTORY
-	    "${BUILD_PATH}/.."
     )
 
     file(
