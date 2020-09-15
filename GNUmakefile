@@ -1236,9 +1236,9 @@ install: cryptest.exe install-lib
 # is present. If you want one, then issue 'make libcryptopp.pc'.
 .PHONY: install-lib
 install-lib:
-	@-$(MKDIR) $(DESTDIR)$(INCLUDEDIR)/cryptopp
-	$(CP) *.h $(DESTDIR)$(INCLUDEDIR)/cryptopp
-	$(CHMOD) 0644 $(DESTDIR)$(INCLUDEDIR)/cryptopp/*.h
+	@-$(MKDIR) $(DESTDIR)$(INCLUDEDIR)
+	$(CP) *.h $(DESTDIR)$(INCLUDEDIR)
+	$(CHMOD) 0644 $(DESTDIR)$(INCLUDEDIR)/*.h
 ifneq ($(wildcard libcryptopp.a),)
 	@-$(MKDIR) $(DESTDIR)$(LIBDIR)
 	$(CP) libcryptopp.a $(DESTDIR)$(LIBDIR)
