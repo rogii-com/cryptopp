@@ -16,6 +16,13 @@ set(
     amd64
 )
 
+if(WIN32)
+    set(
+        MSBUILD_ARCH
+        x64
+    )
+endif()
+
 include(
     "${CMAKE_CURRENT_LIST_DIR}/build_common.cmake"
 )
