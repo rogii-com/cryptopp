@@ -73,32 +73,28 @@ if(WIN32)
         "${BUILD_PATH}/.."
     )
 
-    file(
-        COPY
+    configure_file(
         ${MSBUILD_ARCH}/Output/Release/cryptlib.lib 
-    DESTINATION
         ${ROOT}/${PACKAGE_NAME}/lib/cryptlib.lib
+        COPYONLY
     )
 
-    file(
-        COPY
-        ${MSBUILD_ARCH}/Output/Debug/cryptlib.lib
-    DESTINATION
-        ${ROOT}/${PACKAGE_NAME}/lib/cryptlibd.lib
+    configure_file(
+        ${MSBUILD_ARCH}/Output/Debug/cryptlib.lib 
+        ${ROOT}/${PACKAGE_NAME}/lib/cryptlibd.lib 
+        COPYONLY
     )
 
-    file(
-        COPY
+    configure_file(
         ${MSBUILD_ARCH}/Output/Debug/cryptlib.pdb
-    DESTINATION
-        ${ROOT}/${PACKAGE_NAME}/lib/cryptlib.pdb
+        ${ROOT}/${PACKAGE_NAME}/lib/cryptlib.pdb 
+        COPYONLY
     )
 
-    file(
-        COPY
+    configure_file(
         ${MSBUILD_ARCH}/Output/Debug/cryptlib.pdb
-    DESTINATION
         ${ROOT}/${PACKAGE_NAME}/lib/cryptlibd.pdb
+        COPYONLY
     )
 
     file(
