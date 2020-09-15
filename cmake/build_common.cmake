@@ -9,7 +9,7 @@ include("${CMAKE_CURRENT_LIST_DIR}/Version.cmake")
 
 set(
     BUILD
-    0
+    1
 )
 
 if(DEFINED ENV{BUILD_NUMBER})
