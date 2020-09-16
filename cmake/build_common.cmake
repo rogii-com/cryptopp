@@ -101,11 +101,6 @@ else()
             ${BUILD_PATH}
     )
 
-    set(
-        ENV{LDFLAGS}
-        "-Wl,-rpath='\$$ORIGIN' -Wl,-rpath='\$$ORIGIN../'"
-    )
-
     function(make isDebug)
         if(NOT ${isDebug} MATCHES "RELEASE")
             set(
