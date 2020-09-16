@@ -166,7 +166,7 @@
       <OutputFile>$(OutDir)$(TargetName)d$(TargetExt)</OutputFile>
     </Lib>
     <ClCompile>
-      <ProgramDataBaseFileName>$(IntDir)$(ProjectName)d.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(Platform)\Output\$(Configuration)\$(ProjectName)d.pdb</ProgramDataBaseFileName>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -174,18 +174,24 @@
       <OutputFile>$(OutDir)$(TargetName)d$(TargetExt)</OutputFile>
     </Lib>
     <ClCompile>
-      <ProgramDataBaseFileName>$(IntDir)$(ProjectName)d.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(Platform)\Output\$(Configuration)\$(ProjectName)d.pdb</ProgramDataBaseFileName>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Lib>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
+    <ClCompile>
+      <ProgramDataBaseFileName>$(Platform)\Output\$(Configuration)\$(ProjectName).pdb</ProgramDataBaseFileName>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Lib>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
+    <ClCompile>
+      <ProgramDataBaseFileName>$(Platform)\Output\$(Configuration)\$(ProjectName).pdb</ProgramDataBaseFileName>
+    </ClCompile>
   </ItemDefinitionGroup>
   <!-- Original File with special treatment -->
   <!-- Source Files -->

@@ -61,14 +61,14 @@ if(WIN32)
 
     execute_process(
     COMMAND
-        msbuild cryptlib.vcxproj /t:Build /p:Configuration=Release /p:Platform=${MSBUILD_ARCH} /p:DebugSymbols=true /p:DebugType=full
+        msbuild cryptlib.vcxproj /t:Build /p:Configuration=Release /p:Platform=${MSBUILD_ARCH}
     WORKING_DIRECTORY
         "${BUILD_PATH}/.."
     )
 
     execute_process(
     COMMAND
-        msbuild cryptlib.vcxproj /t:Build /p:Configuration=Debug /p:Platform=${MSBUILD_ARCH} /p:DebugSymbols=true /p:DebugType=full
+        msbuild cryptlib.vcxproj /t:Build /p:Configuration=Debug /p:Platform=${MSBUILD_ARCH}
     WORKING_DIRECTORY
         "${BUILD_PATH}/.."
     )
@@ -78,7 +78,7 @@ if(WIN32)
             ${MSBUILD_ARCH}/Output/Release/cryptlib.lib 
             ${MSBUILD_ARCH}/Output/Release/cryptlib.pdb
             ${MSBUILD_ARCH}/Output/Debug/cryptlibd.lib
-#            ${MSBUILD_ARCH}/Output/Debug/cryptlibd.pdb
+            ${MSBUILD_ARCH}/Output/Debug/cryptlibd.pdb
         DESTINATION
             ${ROOT}/${PACKAGE_NAME}/lib/
     )
