@@ -61,40 +61,26 @@ if(WIN32)
 
     execute_process(
     COMMAND
-        msbuild cryptlib.vcxproj /t:Build /p:Configuration=Release /p:Platform=${MSBUILD_ARCH}
+        msbuild cryptlib.vcxproj /t:Build /p:Configuration=Release /p:Platform=${MSBUILD_ARCH} /p:DebugSymbols=true /p:DebugType=full
     WORKING_DIRECTORY
         "${BUILD_PATH}/.."
     )
 
     execute_process(
     COMMAND
-        msbuild cryptlib.vcxproj /t:Build /p:Configuration=Debug /p:Platform=${MSBUILD_ARCH}
+        msbuild cryptlib.vcxproj /t:Build /p:Configuration=Debug /p:Platform=${MSBUILD_ARCH} /p:DebugSymbols=true /p:DebugType=full
     WORKING_DIRECTORY
         "${BUILD_PATH}/.."
     )
 
-    configure_file(
-        ${MSBUILD_ARCH}/Output/Release/cryptlib.lib 
-        ${ROOT}/${PACKAGE_NAME}/lib/cryptlib.lib
-        COPYONLY
-    )
-
-    configure_file(
-        ${MSBUILD_ARCH}/Output/Debug/cryptlib.lib 
-        ${ROOT}/${PACKAGE_NAME}/lib/cryptlibd.lib 
-        COPYONLY
-    )
-
-    configure_file(
-        ${MSBUILD_ARCH}/Output/Debug/cryptlib.pdb
-        ${ROOT}/${PACKAGE_NAME}/lib/cryptlib.pdb 
-        COPYONLY
-    )
-
-    configure_file(
-        ${MSBUILD_ARCH}/Output/Debug/cryptlib.pdb
-        ${ROOT}/${PACKAGE_NAME}/lib/cryptlibd.pdb
-        COPYONLY
+    file(
+        COPY
+            ${MSBUILD_ARCH}/Output/Release/cryptlib.lib 
+            ${MSBUILD_ARCH}/Output/Release/cryptlib.pdb
+            ${MSBUILD_ARCH}/Output/Debug/cryptlibd.lib
+#            ${MSBUILD_ARCH}/Output/Debug/cryptlibd.pdb
+        DESTINATION
+            ${ROOT}/${PACKAGE_NAME}/lib/
     )
 
     file(
