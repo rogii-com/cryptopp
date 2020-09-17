@@ -48,15 +48,15 @@ set(
 
 if(WIN32)
     if(NOT ${ARCH} MATCHES x86)
-    set(
-        MSBUILD_ARCH
-        x64
-    )
-    else()
-    set(
-        MSBUILD_ARCH
-        win32
-    )
+        set(
+            MSBUILD_ARCH
+            x64
+        )
+        else()
+        set(
+            MSBUILD_ARCH
+            win32
+        )
     endif()
 
     execute_process(
