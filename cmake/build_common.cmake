@@ -9,7 +9,7 @@ include("${CMAKE_CURRENT_LIST_DIR}/Version.cmake")
 
 set(
     BUILD
-    1
+    0
 )
 
 if(DEFINED ENV{BUILD_NUMBER})
@@ -47,18 +47,6 @@ set(
 )
 
 if(WIN32)
-    if(NOT ${ARCH} MATCHES x86)
-        set(
-            MSBUILD_ARCH
-            x64
-        )
-        else()
-        set(
-            MSBUILD_ARCH
-            win32
-        )
-    endif()
-
     execute_process(
     COMMAND
         msbuild cryptlib.vcxproj /t:Build /p:Configuration=Release /p:Platform=${MSBUILD_ARCH}
